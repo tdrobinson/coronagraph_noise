@@ -1,0 +1,12 @@
+; 'all' throughput for WFIRST, excluding quantum efficiency
+;    from Traub et al. (2016) Figure 4
+       lam       throughput
+       [um]
+     0.400413   0.00114318
+     0.499709     0.245308
+     0.600842     0.279700
+     0.745886     0.255260
+     0.795165     0.239302
+     0.849932     0.215919
+     0.950269     0.202296
+     0.998674     0.170905
