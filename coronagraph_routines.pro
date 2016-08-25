@@ -173,6 +173,24 @@ FUNCTION cread, Re, X, lam, D, theta, DNhpix, Dtmax, IMAGE=image, CIRC=circ
   RETURN, Npix/(Dtmax*3600.)*Re
 END
 
+;  clock induced charge count rate
+;     Rc - clock induced charge counts per pixel per read
+;      X - diameter or length of photometric aperture (lambda/D)
+;    lam - wavelength (um)
+;      D - telescope diameter (m)
+;  theta - angular diameter of lenslet or pixel (arcsec)
+;  Dtmax - maximum exposure time (hr)
+; /IMAGE - keyword set to indicate imaging mode (not IFS)
+;  /CIRC - keyword to use a circular aperture
+;  cread - read count rate (s**-1)
+FUNCTION ccic, Rc, X, lam, D, theta, DNhpix, Dtmax, IMAGE=image, CIRC=circ
+  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture diameter (arcsec**2)
+  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture diameter (arcsec**2)
+  Npix  = Omega/!DPI/theta^2.
+  IF ~KEYWORD_SET( IMAGE ) THEN Npix = 2*DNhpix*Npix
+  RETURN, Npix/(Dtmax*3600.)*Rc
+END
+
 ;  fraction of Airy power contained in square or circular aperture
 ;      X - size of photometric aperture (lambda/D)
 ;  /CIRC - keyword to use a circular aperture
