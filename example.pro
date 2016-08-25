@@ -34,15 +34,15 @@ PRO EXAMPLE
   WFIRST_SPCS, Ahr, lamhr, alpha, Phi, Rp, Teff, Rs, r, d, Nez, $
                lam_spcs, dlam_spcs, A_spcs, Cratio_spcs, cp_spcs, $
                csp_spcs, cz_spcs, cez_spcs, cD_spcs, cR_spcs, $
-               ctot_spcs, DtSNR_spcs
+               cC_spcs, ctot_spcs, csig_spcs, cnoise_spcs, DtSNR_spcs
   WFIRST_SPCI, Ahr, lamhr, alpha, Phi, Rp, Teff, Rs, r, d, Nez, $
                lam_spci, dlam_spci, A_spci, Cratio_spci, cp_spci, $
                csp_spci, cz_spci, cez_spci, cD_spci, cR_spci, $
-               ctot_spci, DtSNR_spci
+               cC_spci, ctot_spci, csig_spci, cnoise_spci, DtSNR_spci
   WFIRST_HLC,  Ahr, lamhr, alpha, Phi, Rp, Teff, Rs, r, d, Nez, $
                lam_hlc, dlam_hlc, A_hlc, Cratio_hlc, cp_hlc, $
                csp_hlc, cz_hlc, cez_hlc, cD_hlc, cR_hlc, $
-               ctot_hlc, DtSNR_hlc
+               cC_hlc, ctot_hlc, csig_hlc, cnoise_hlc, DtSNR_hlc
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;; call generalized noise model ;;;
@@ -50,15 +50,15 @@ PRO EXAMPLE
   lammin = 0.4    ; minimum wavelength (um)
   lammax = 1.0    ; maximum wavelength (um)
   Res    = 70.    ; spectral resolution
-  X      = 1.5    ; photometric aperture size (lambda/D)
+  X      = 1.0    ; photometric aperture size (lambda/D)
   diam   = 2.4    ; telescope diameter (m)
-  Tput   = 0.05   ; system throughput
+  Tput   = 0.02   ; system throughput
   cont   = 2.e-10 ; design raw contrast
-  IWA    = 2.8    ; inner working angle (lambda/D)
+  IWA    = 2.7    ; inner working angle (lambda/D)
   OWA    = 10.    ; outer working angle (lambda/D)
   De     = 5.d-4  ; dark current (s**-1)
   DNhpix = 3      ; horizontal pixel spread of IFS spectrum
-  Re     = 0.1    ; read noise per pixel
+  Re     = 3.     ; read noise per pixel
   Dtmax  = 1.     ; maximum exposure time (hr)
   CORONAGRAPH, Ahr, lamhr, alpha, Phi, Rp, Teff, Rs, r, d, Nez, lammin, lammax, $
                Res, X, diam, Tput, cont, IWA, OWA, De, DNhpix, Re, Dtmax, $
