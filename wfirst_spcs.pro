@@ -61,7 +61,7 @@ PRO WFIRST_SPCS, Ahr, lamhr, alpha, Phi, Rp, Teff, Rs, r, d, Nez, $
   lammin = 0.60      ; minimum wavelength (um)
   lammax = 0.97      ; maximum wavelength (um)
   Res    = 70.       ; spectral resolution
-  DNhpix = 3         ; horizontal pixel spread of IFS spectrum
+  DNhpix = 2         ; horizontal pixel spread of IFS spectrum
   fpa    = 1.        ; fraction of planetary signal in Airy pattern; set to unity
                      ; as the pointsource throughput now includes this
   
