@@ -84,8 +84,8 @@ FUNCTION czodi, q, X, T, lam, dlam, D, MzV, SUN=sun, CIRC=circ
   ENDELSE
   rat   = DBLARR(N_ELEMENTS(lam))
   rat[*]= Fsol[*]/FsolV ; ratio of solar flux to V-band solar flux
-  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X/2.*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
-  IF ~KEYWORD_SET(circ) THEN Omega = (X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
+  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
+  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
   RETURN, !DPI*q*T*Omega*dlam*(lam*1.d-6/hc)*(D/2)^2.*rat*F0V*10^(-Mzv/2.5)
 END
 
@@ -118,8 +118,8 @@ FUNCTION cezodi, q, X, T, lam, dlam, D, r, Fstar, Nez, MezV, SUN=sun, CIRC=circ
   ENDELSE
   rat   = DBLARR(N_ELEMENTS(lam))
   rat[*]= Fstar[*]/FsolV ; ratio of solar flux to V-band solar flux
-  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X/2.*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
-  IF ~KEYWORD_SET(circ) THEN Omega = (X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
+  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
+  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
   RETURN, !DPI*q*T*Omega*dlam*(lam*1.d-6/hc)*(D/2)^2.*(1./r)^2.*rat*Nez*F0V*10^(-Mezv/2.5)
 END
 
@@ -142,14 +142,14 @@ END
 ;      X - diameter or length of photometric aperture (lambda/D)
 ;    lam - wavelength (um)
 ;      D - telescope diameter (m)
-;  theta - angular diameter of lenslet or pixel (arcsec)
+;  theta - angular radius of lenslet or pixel (arcsec)
 ; DNhpix - number of pixels spectrum spread over in horizontal, for IFS
 ; /IMAGE - keyword set to indicate imaging mode (not IFS)
 ;  /CIRC - keyword to use a circular aperture
 ;  cdark - dark count rate (s**-1)
 FUNCTION cdark, De, X, lam, D, theta, DNhpix, IMAGE=image, CIRC=circ
-  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture diameter (arcsec**2)
-  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture diameter (arcsec**2)
+  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
+  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
   Npix  = Omega/!DPI/theta^2.
   IF ~KEYWORD_SET( IMAGE ) THEN Npix = 2*DNhpix*Npix
   RETURN, De*Npix
@@ -160,14 +160,14 @@ END
 ;      X - diameter or length of photometric aperture (lambda/D)
 ;    lam - wavelength (um)
 ;      D - telescope diameter (m)
-;  theta - angular diameter of lenslet or pixel (arcsec)
+;  theta - angular radius of lenslet or pixel (arcsec)
 ;  Dtmax - maximum exposure time (hr)
 ; /IMAGE - keyword set to indicate imaging mode (not IFS)
 ;  /CIRC - keyword to use a circular aperture
 ;  cread - read count rate (s**-1)
 FUNCTION cread, Re, X, lam, D, theta, DNhpix, Dtmax, IMAGE=image, CIRC=circ
-  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture diameter (arcsec**2)
-  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture diameter (arcsec**2)
+  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
+  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
   Npix  = Omega/!DPI/theta^2.
   IF ~KEYWORD_SET( IMAGE ) THEN Npix = 2*DNhpix*Npix
   RETURN, Npix/(Dtmax*3600.)*Re
@@ -178,14 +178,14 @@ END
 ;      X - diameter or length of photometric aperture (lambda/D)
 ;    lam - wavelength (um)
 ;      D - telescope diameter (m)
-;  theta - angular diameter of lenslet or pixel (arcsec)
+;  theta - angular radius of lenslet or pixel (arcsec)
 ;  Dtmax - maximum exposure time (hr)
 ; /IMAGE - keyword set to indicate imaging mode (not IFS)
 ;  /CIRC - keyword to use a circular aperture
 ;  cread - read count rate (s**-1)
 FUNCTION ccic, Rc, X, lam, D, theta, DNhpix, Dtmax, IMAGE=image, CIRC=circ
-  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture diameter (arcsec**2)
-  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture diameter (arcsec**2)
+  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
+  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
   Npix  = Omega/!DPI/theta^2.
   IF ~KEYWORD_SET( IMAGE ) THEN Npix = 2*DNhpix*Npix
   RETURN, Npix/(Dtmax*3600.)*Rc
@@ -243,4 +243,27 @@ FUNCTION f_airy_int, X
     E = E + Iairy[i,j]*dA ; sum intensities
   E     = 4.d*E ; factor of 4 as integral only over one quadrant
   fpa   = E/E0  
+END
+
+;  telescope thermal count rate
+;      q - quantum efficiency
+;      X - size of photometric aperture (lambda/D)
+;      T - system throughput
+;    lam - wavelength (um)
+;   dlam - spectral element width (um)
+;      D - telescope diameter (m)
+;   Tsys - telescope/system temperature (K)
+;   emis - telescope/system emissivity
+; ctherm - telescope thermal photon count rate (s**-1)
+FUNCTION ctherm, q, X, T, lam, dlam, D, Tsys, emis, CIRC=circ
+  IF KEYWORD_SET(circ)  THEN Omega = !DPI*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; circular aperture size (arcsec**2)
+  IF ~KEYWORD_SET(circ) THEN Omega = 4.d0*(X*lam*1.d-6/D*180.*3600./!DPI)^2. ; square aperture size (arcsec**2)
+  Omega = Omega/(206265.^2.) ; convert to sr**2
+  hc    = 1.986446d-25  ; h*c (kg*m**3/s**2)
+  c1    = 3.7417715d-16 ; 2*pi*h*c*c (kg m**4 / s**3)   
+  c2    = 1.4387769d-2  ; h*c/k (m K)
+  lambda= 1.d-6*lam     ; wavelength (m)
+  pow   = c2/lambda/Tsys
+  Bsys  = c1/( (lambda^5.)*(exp(pow)-1.d) )*1.d-6/!DPI ;system Planck function (W/m**2/um/sr)
+  RETURN, !DPI*q*T*dlam*emis*Bsys*Omega*(lam*1.d-6/hc)*(D/2)^2.
 END
